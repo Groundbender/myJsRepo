@@ -6,7 +6,7 @@ let screens = prompt(
 );
 let screenPrice = +prompt("Сколько будет стоить данная работа?");
 
-let adaptive = Boolean(prompt("Нужен ли адаптив на сайте?"));
+let adaptive = confirm("Нужен ли адаптив на сайте?");
 
 let service1 = prompt("Какой дополнительный тип услуги нужен?");
 let servicePrice1 = +prompt("Сколько это будет стоить?");
