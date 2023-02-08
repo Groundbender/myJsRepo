@@ -31,17 +31,18 @@ const getAllServicePrices = function () {
   let sum = 0;
 
   for (let i = 0; i < 2; i++) {
+    let price = 0;
+
     if (i === 0) {
       service1 = prompt("Какой дополнительный тип услуги нужен?");
     } else if (i === 1) {
       service1 = prompt("Какой дополнительный тип услуги нужен?");
     }
 
-    let priceAll;
     do {
-      priceAll = prompt("Сколько это будет стоить?");
-    } while (!isNumber(priceAll));
-    sum += +priceAll;
+      price = prompt("Сколько это будет стоить?");
+    } while (!isNumber(price));
+    sum += +price;
   }
 
   return sum;
