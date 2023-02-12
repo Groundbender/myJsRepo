@@ -22,7 +22,7 @@ const appData = {
   screens: [],
   screenPrice: 0,
   adaptive: true,
-  rollback: 10,
+  rollback: 0,
   servicePricesPercent: 0,
   servicePricesNumber: 0,
   fullPrice: 0,
@@ -30,7 +30,7 @@ const appData = {
   servicesPercent: {},
   servicesNumber: {},
   init: function () {
-    appData.blockStart();
+    // appData.blockStart();
     appData.addTitle();
     startBtn.addEventListener("click", appData.start);
 
@@ -45,7 +45,7 @@ const appData = {
 
     appData.addPrices();
     // appData.getServicePercentPrices();
-    appData.logger();
+    // appData.logger();
     appData.showResult();
   },
   showResult: function () {
@@ -62,16 +62,25 @@ const appData = {
 
   addScreens: function () {
     const screens = document.querySelectorAll(".screen");
+    let flag = true;
     screens.forEach(function (screen, index) {
       const select = screen.querySelector("select");
       const input = screen.querySelector("input");
       const selectName = select.options[select.selectedIndex].textContent;
-      appData.screens.push({
-        id: index,
-        name: selectName,
-        price: +select.value * +input.value,
-        count: +input.value,
-      });
+      if (input.value !== "" && select.value !== "") {
+        if (flag) {
+          appData.screens.push({
+            id: index,
+            name: selectName,
+            price: +select.value * +input.value,
+            count: +input.value,
+          });
+        }
+        flag = true;
+      } else {
+        flag = false;
+        appData.screens.splice(0);
+      }
     });
     console.log(appData.screens);
   },
@@ -98,8 +107,11 @@ const appData = {
   },
   addScreenBlock: function () {
     const cloneScreen = screens[0].cloneNode(true);
-    console.log(cloneScreen);
-    screens[screens.length - 1].after(cloneScreen);
+    cloneScreen.querySelector("input[type='text']").value = "";
+    //  screens[screens.length - 1].after(cloneScreen)
+    document
+      .querySelector(".screen")
+      .insertAdjacentElement("afterend", cloneScreen);
   },
 
   addPrices: function () {
@@ -131,41 +143,29 @@ const appData = {
     console.log(screenNum);
   },
 
-  getRollbackMessage: function (price) {
-    if (price > 30000) {
-      return "Даем скидку в 10%";
-    } else if (price <= 30000 && price > 15000) {
-      return "Даем скидку в 5%";
-    } else if (price <= 15000 && price > 0) {
-      return "Скидка не предусмотрена";
-    } else {
-      return "Что-то пошло не так";
-    }
-  },
-
   logger: function () {
     console.log(appData.fullPrice);
     console.log(appData.servicePercentPrice);
     console.log(appData.screens);
   },
-  blockStart: function () {
-    let select = document.querySelector("select[name='views-select']");
-    let input = document.querySelector("input[type=text]");
+  // blockStart: function () {
+  //   let select = document.querySelector("select[name='views-select']");
+  //   let input = document.querySelector("input[type=text]");
 
-    function checkFilled() {
-      if (select.value === "" || input.value === "") {
-        startBtn.disabled = true;
-      } else {
-        startBtn.disabled = false;
-      }
-    }
-    select.addEventListener("change", function () {
-      checkFilled();
-    });
-    input.addEventListener("change", function () {
-      checkFilled();
-    });
-  },
+  //   function checkFilled() {
+  //     if (select.value === "" || input.value === "") {
+  //       startBtn.disabled = true;
+  //     } else {
+  //       startBtn.disabled = false;
+  //     }
+  //   }
+  //   select.addEventListener("change", function () {
+  //     checkFilled();
+  //   });
+  //   input.addEventListener("change", function () {
+  //     checkFilled();
+  //   });
+  // },
 };
 
 inputRange.addEventListener("input", function () {
@@ -176,3 +176,5 @@ console.log(appData);
 console.log(startBtn);
 
 appData.init();
+
+console.log(screens.length);
