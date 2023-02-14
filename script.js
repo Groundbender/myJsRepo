@@ -26,47 +26,72 @@ const appData = {
   },
   asking: function () {
     // appData.title = prompt("Как называется ваш проект?", "Калькулятор верстки");
-    do {
-      appData.title = prompt(
-        "Как называется ваш проект?",
-        "Калькулятор верстки"
-      );
-    } while (appData.isString(appData.title));
+    // do {
+    //   appData.title = prompt(
+    //     "Как называется ваш проект?",
+    //     "Калькулятор верстки"
+    //   );
+    // } while (appData.isString(appData.title));
+
+    // for (let i = 0; i < 2; i++) {
+    //   let name;
+    //   do {
+    //     name = prompt("Какие типы экранов нужно разработать?");
+    //   } while (appData.isString(name));
+    //   let price = 0;
+
+    //   do {
+    //     price = prompt("Сколько будет стоить данная работа?");
+    //   } while (!appData.isNumber(price));
+
+    //   appData.screens.push({ id: i, name: name, price: price });
+    // }
 
     for (let i = 0; i < 2; i++) {
-      let name;
-      do {
-        name = prompt("Какие типы экранов нужно разработать?");
-      } while (appData.isString(name));
-      let price = 0;
+      let name, name1;
+      if (i === 0) {
+        do {
+          name = prompt("Какой дополнительный тип услуги нужен?");
+        } while (appData.isString(name));
+      }
+      if (i === 1) {
+        do {
+          name1 = prompt("Какой дополнительный тип услуги нужен?");
+        } while (appData.isString(name1));
+      }
 
-      do {
-        price = prompt("Сколько будет стоить данная работа?");
-      } while (!appData.isNumber(price));
-
-      appData.screens.push({ id: i, name: name, price: price });
-    }
-
-    for (let i = 0; i < 2; i++) {
-      let name;
-      do {
-        name = prompt("Какой дополнительный тип услуги нужен?");
-      } while (appData.isString(name));
       let price = 0;
 
       do {
         price = prompt("Сколько это будет стоить?");
       } while (!appData.isNumber(price));
 
-      appData.services[name] = +price;
+      if (i === 0) {
+        appData.services[name] = +price;
+      } else if (i === 1) {
+        appData.services[name1 + " "] = +price;
+      }
+
+      // if (name === name1) {
+      //   appData.services[name1 + "2"] = +price;
+      // } else {
+      //   appData.services[name1] = +price;
+      // }
+
+      // appData.services[name1 + "2"] = +price;
+      // appData.services[name1] = +price;
     }
 
     appData.adaptive = confirm("Нужен ли адаптив на сайте?");
   },
   addPrices: function () {
-    for (let screen of appData.screens) {
-      appData.screenPrice += +screen.price;
-    }
+    // for (let screen of appData.screens) {
+    //   appData.screenPrice += +screen.price;
+    // }
+    appData.screenPrice = appData.screens.reduce(function (sum, screen) {
+      return sum + Number(screen.price);
+    }, 0);
+
     for (let key in appData.services) {
       appData.allServicePrices += appData.services[key];
     }
@@ -104,6 +129,8 @@ const appData = {
     console.log(appData.fullPrice);
     console.log(appData.servicePercentPrice);
     console.log(appData.screens);
+    console.log(appData.services);
+    console.log(appData.screenPrice);
   },
 };
 
