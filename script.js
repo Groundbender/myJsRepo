@@ -47,30 +47,21 @@ const appData = {
     //   appData.screens.push({ id: i, name: name, price: price });
     // }
 
-    for (let i = 0; i < 2; i++) {
-      let name, name1;
-      if (i === 0) {
+
+      for (let i = 0; i < 2; i++) {
+        let name;
         do {
-          name = prompt("Какой дополнительный тип услуги нужен?");
+        name = prompt("Какой дополнительный тип услуги нужен?");
         } while (appData.isString(name));
-      }
-      if (i === 1) {
+        
+        let price = 0;
+        
         do {
-          name1 = prompt("Какой дополнительный тип услуги нужен?");
-        } while (appData.isString(name1));
-      }
-
-      let price = 0;
-
-      do {
         price = prompt("Сколько это будет стоить?");
-      } while (!appData.isNumber(price));
-
-      if (i === 0) {
-        appData.services[name] = +price;
-      } else if (i === 1) {
-        appData.services[name1 + " "] = +price;
-      }
+        } while (!appData.isNumber(price));
+        
+        appData.services[name + i] = price;
+        }
 
       // if (name === name1) {
       //   appData.services[name1 + "2"] = +price;
@@ -80,7 +71,7 @@ const appData = {
 
       // appData.services[name1 + "2"] = +price;
       // appData.services[name1] = +price;
-    }
+    
 
     appData.adaptive = confirm("Нужен ли адаптив на сайте?");
   },
