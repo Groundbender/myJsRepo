@@ -35,6 +35,7 @@ const appData = {
     startBtn.addEventListener("click", appData.start);
 
     buttonPlus.addEventListener("click", appData.addScreenBlock);
+    inputRange.addEventListener("input", appData.getRollback);
   },
   addTitle: function () {
     document.title = title.textContent;
@@ -117,6 +118,8 @@ const appData = {
   },
 
   addPrices: function () {
+    appData.rollback = Number(inputRange.value);
+
     for (let screen of appData.screens) {
       appData.screenPrice += +screen.price;
     }
@@ -150,6 +153,11 @@ const appData = {
     console.log(appData.servicePercentPrice);
     console.log(appData.screens);
   },
+  getRollback: function () {
+    inputRangeValue.textContent = inputRange.value + "%";
+    totalCountRollback.value =
+      appData.fullPrice - appData.fullPrice * (inputRange.value / 100);
+  },
   // blockStart: function () {
   //   let select = document.querySelector("select[name='views-select']");
   //   let input = document.querySelector("input[type=text]");
@@ -170,10 +178,6 @@ const appData = {
   // },
 };
 
-inputRange.addEventListener("input", function () {
-  inputRangeValue.textContent = inputRange.value;
-  appData.rollback = inputRange.value;
-});
 console.log(appData);
 console.log(startBtn);
 
