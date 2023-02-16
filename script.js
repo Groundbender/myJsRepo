@@ -16,16 +16,15 @@ const isNumber = function (num) {
 };
 
 const asking = function () {
-  // title = prompt("Как называется ваш проект?", "Калькулятор верстки");
-  // screens = prompt("Какие типы экранов нужно разработать?", "Простые, Сложные");
+  title = prompt("Как называется ваш проект?", "Калькулятор верстки");
+  screens = prompt("Какие типы экранов нужно разработать?", "Простые, Сложные");
   // screenPrice = prompt("Сколько будет стоить данная работа?");
 
   do {
-    screenPrice = prompt("Сколько будет стоить данная работа?");
-  } while (!isNumber(screenPrice) || screenPrice === null);
+    screenPrice = +prompt("Сколько будет стоить данная работа?");
+  } while (!isNumber(screenPrice) || screenPrice === 0);
 
   adaptive = confirm("Нужен ли адаптив на сайте?");
-  console.log(screenPrice);
 };
 
 const getAllServicePrices = function () {
