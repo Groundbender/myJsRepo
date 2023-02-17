@@ -207,6 +207,7 @@ const appData = {
     ).value = "";
     inputRange.value = "0";
     inputRangeValue.textContent = inputRange.value;
+
     appData.screens = [];
     appData.screenPrice = 0;
     appData.adaptive = true;
@@ -241,8 +242,12 @@ const appData = {
         ).style.display = "none";
       }
       if (cmsSelect.value === "50") {
-        totalSum =
-          appData.fullPrice + appData.fullPrice * Number(cmsSelect.value / 100);
+        let screenNum = 0;
+        screenNum = appData.screens.reduce(
+          (accum, currentValue) => accum + Number(currentValue.price),
+          0
+        );
+        totalSum = screenNum + screenNum * 0.5;
         console.log(totalSum);
       }
     });
