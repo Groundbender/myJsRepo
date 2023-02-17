@@ -16,6 +16,8 @@ const totalCountOther = document.getElementsByClassName("total-input")[2];
 const fullTotalCount = document.getElementsByClassName("total-input")[3];
 const totalCountRollback = document.getElementsByClassName("total-input")[4];
 let screens = document.querySelectorAll(".screen");
+const checks = document.querySelectorAll("input[type=checkbox]");
+const cmsCheck = document.querySelector("#cms-open");
 
 const appData = {
   title: "",
@@ -37,6 +39,7 @@ const appData = {
     buttonPlus.addEventListener("click", this.addScreenBlock);
     inputRange.addEventListener("input", this.getRollback);
     resetBtn.addEventListener("click", this.reset);
+    cmsCheck.addEventListener("click", this.getCmsBlock);
   },
   addTitle: function () {
     document.title = title.textContent;
@@ -195,6 +198,13 @@ const appData = {
     document.querySelectorAll(".total-input").forEach((item) => {
       item.value = "0";
     });
+    document.querySelector(".hidden-cms-variants").style.display = "none";
+    document.querySelector(
+      ".hidden-cms-variants>.main-controls__input"
+    ).style.display = "none";
+    document.querySelector(
+      ".hidden-cms-variants>.main-controls__select>select"
+    ).value = "";
     inputRange.value = "0";
     inputRangeValue.textContent = inputRange.value;
     appData.screens = [];
@@ -207,6 +217,35 @@ const appData = {
     appData.servicePercentPrice = 0;
     appData.servicesPercent = {};
     appData.servicesNumber = {};
+  },
+
+  getCmsBlock: function () {
+    const cmsVariants = document.querySelector(".hidden-cms-variants");
+    const cmsSelect = document.querySelector(
+      ".hidden-cms-variants>.main-controls__select>select"
+    );
+    if (cmsCheck.checked) {
+      cmsVariants.style.display = "flex";
+    } else {
+      cmsVariants.style.display = "none";
+    }
+    cmsVariants.addEventListener("change", () => {
+      let totalSum;
+      if (cmsSelect.value === "other") {
+        document.querySelector(
+          ".hidden-cms-variants>.main-controls__input"
+        ).style.display = "block";
+      } else {
+        document.querySelector(
+          ".hidden-cms-variants>.main-controls__input"
+        ).style.display = "none";
+      }
+      if (cmsSelect.value === "50") {
+        totalSum =
+          appData.fullPrice + appData.fullPrice * Number(cmsSelect.value / 100);
+        console.log(totalSum);
+      }
+    });
   },
 };
 
